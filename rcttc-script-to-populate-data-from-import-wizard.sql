@@ -1,5 +1,7 @@
 use rcttc;
 
+select count(*) from temp_rcttc_data;
+
 -- in the import i named the temp table temp_rcttc_data
 
 -- populate customer table
@@ -84,7 +86,7 @@ select
 from temp_rcttc_data temp
 inner join `show` s on temp.`show` = s.`title`
 	and temp.`date` = s.`date`
-inner join customer c on temp.customer_phone = c.phone
+left outer join customer c on temp.customer_email = c.email
 inner join theater t on s.theater_id = t.theater_id;
 
 insert into ticket (show_id, customer_id, seat)
@@ -94,14 +96,12 @@ insert into ticket (show_id, customer_id, seat)
 		temp.seat
 	from temp_rcttc_data temp
 	inner join `show` s on temp.`show` = s.`title`
-		and temp.`date` = s.date
-	inner join customer c on temp.customer_phone = c.phone;
+		and temp.`date` = s.`date`
+	inner join customer c on temp.customer_email = c.email;
     
-    select * from ticket;
-    
-    select count(*)
-    from temp_rcttc_data;
-    
+    select count(*) from ticket;
+
+drop table temp_rcttc_data;
 
     
     
