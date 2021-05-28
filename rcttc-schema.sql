@@ -9,8 +9,8 @@ create table customer (
 	first_name  varchar(255) not null,
     last_name varchar(255) not null,
     email varchar(255) not null,
-    phone varchar(255) null,
-    address varchar(255) null
+    phone varchar(255) default null,
+    address varchar(255) default null
 );
 
 create table `show` (
@@ -33,7 +33,7 @@ create table ticket (
 	ticket_id int primary key auto_increment,
     show_id int not null,
     customer_id int not null,
-    seat varchar(2),
+    seat varchar(2) not null,
     theater_id int not null,
     constraint fk_ticket_show_id
 		foreign key (show_id)
