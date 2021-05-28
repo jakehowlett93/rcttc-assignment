@@ -1,3 +1,5 @@
+use rcttc;
+
 -- DML step 1 (insert)
 
 -- insert values for customer
