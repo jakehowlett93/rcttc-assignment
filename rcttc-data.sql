@@ -325,7 +325,7 @@ update `show` set
 	price = 22.25
 where `show`.show_id = 5;
 
--- change seat reservations so that pooh bedburrow and cullen guirau are in the same row
+-- change seat reservations so that pooh bedburrow and cullen guirau tickets are in the same rows
 
 -- check for the correct data and find ticket ids (im using the show id i found in the previous question)
 select
@@ -339,16 +339,71 @@ order by t.seat asc;
 
 -- perform updates
 update ticket set
-	seat = 'A1'
-where ticket_id = 39;
+	seat = 'A4'
+where ticket_id = 101;
 
 update ticket set
 	seat = 'B4'
-where customer_id = 37;
+where ticket_id = 98;
 
 update ticket set
 	seat = 'C2'
-where customer_id = 38;
+where ticket_id = 100;
 
+-- update jammie swindles phone number from 801-514-8648 to 1-801-eat-cake
 
+-- check for correct data and find customer id
+
+select
+	concat(first_name, ' ', last_name) `name`,
+    customer_id,
+    phone
+from customer
+where concat(first_name, ' ', last_name) = 'jammie swindles';
+
+update customer set
+	phone = '1-801-EAT-CAKE'
+where customer_id = 48;
+
+-- DML step 2 (delete)
+
+-- delete all single ticket reservations at 10 pin
+
+-- check for correct data and find customer ids
+
+select
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    count(s.show_id)
+from customer c
+inner join ticket t on c.customer_id = t.customer_id
+inner join `show` s on t.show_id = s.show_id
+inner join theater th on s.theater_id = th.theater_id
+where th.`name` = '10 pin'
+group by
+    c.customer_id,
+    c.first_name,
+    c.last_name
+having count(s.show_id) = 1;
     
+delete t from ticket t
+inner join customer c on t.customer_id = c.customer_id
+inner join `show` s on t.show_id = t.show_id
+inner join theater th on s.theater_id = th.theater_id
+where c.customer_id in (7, 8, 10, 15, 18, 19, 22, 25, 26)
+	and th.`name` = '10 pin';
+    
+-- delete the customer liv egle of germany
+
+-- check for correct data and find customer id
+select *
+from customer
+where first_name = 'liv';
+
+delete t from ticket t
+where customer_id = 65;
+
+delete from customer
+where customer_id = 65;
+
