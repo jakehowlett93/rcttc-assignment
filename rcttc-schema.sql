@@ -37,7 +37,6 @@ create table ticket (
     show_id int not null,
     customer_id int not null,
     seat varchar(2) not null,
-    theater_id int not null,
     constraint fk_ticket_show_id
 		foreign key (show_id)
         references `show`(show_id),
