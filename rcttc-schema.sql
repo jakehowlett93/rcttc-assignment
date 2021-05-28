@@ -9,15 +9,8 @@ create table customer (
 	first_name  varchar(255) not null,
     last_name varchar(255) not null,
     email varchar(255) not null,
-    phone varchar(255) default null,
-    address varchar(255) default null
-);
-
-create table `show` (
-	show_id int primary key auto_increment,
-    title varchar(250) not null,
-    `date` date not null,
-    price decimal(4,2) not null
+    phone varchar(255) null default null,
+    address varchar(255) null default null
 );
 
 create table theater (
@@ -27,8 +20,18 @@ create table theater (
     phone varchar(255) not null,
     email varchar(225) not null
 );
-    
 
+create table `show` (
+	show_id int primary key auto_increment,
+    title varchar(250) not null,
+    price decimal(4,2) not null,
+    date date not null,
+    theater_id int not null,
+	constraint fk_show_theater_id
+		foreign key (theater_id)
+        references theater(theater_id)
+);
+    
 create table ticket (
 	ticket_id int primary key auto_increment,
     show_id int not null,
@@ -40,9 +43,6 @@ create table ticket (
         references `show`(show_id),
 	constraint fk_ticket_customer_id
 		foreign key (customer_id)
-        references customer(customer_id),
-	constraint fk_ticket_theater_id
-		foreign key (theater_id)
-        references theater(theater_id)
+        references customer(customer_id)
 );
     
