@@ -86,10 +86,10 @@ group by
     c.last_name;
     
 -- Calculate the total revenue per show based on tickets sold.
+-- I'm unsure if this means for each show in general or each showing but i went with each showing.
 
 select
 	s.title,
-    s.`date`,
     s.price,
     count(t.ticket_id) tickets_sold,
     count(t.ticket_id) * s.price revenue
@@ -97,7 +97,6 @@ from `show` s
 inner join ticket t on s.show_id = t.show_id
 group by
 	s.title,
-    s.`date`,
     s.price;
     
 -- Calculate the total revenue per theater based on tickets sold.
@@ -114,14 +113,37 @@ group by
 	th.`name`;
     
 -- Who is the biggest supporter of RCTTC? 
--- covering a few bases here:
+-- covering a couple of bases here:
 
 -- Who spent the most in 2021?
 
--- who bought the most tickets
+select
+	c.first_name,
+    c.last_name,
+    round(avg(s.price), 2) average_ticket_price,
+    count(t.ticket_id) total_tickets,
+    round(avg(s.price), 2) * count(t.ticket_id) total_spent
+from customer c
+inner join ticket t on c.customer_id = t.customer_id
+inner join `show` s on t.show_id = s.show_id
+group by 
+	c.first_name,
+    c.last_name
+order by total_spent desc
+limit 1;
 
--- whos seen all the shows
+-- who bought the most tickets?
 
--- who watched the most shows
+select
+	c.first_name,
+    c.last_name,
+    count(t.ticket_id)
+from customer c
+inner join ticket t on c.customer_id = t.customer_id
+group by 
+	c.first_name,
+    c.last_name
+order by count(t.ticket_id) desc
+limit 1;
 
--- whos visited all the theaters
+
