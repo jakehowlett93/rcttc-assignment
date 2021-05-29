@@ -363,6 +363,7 @@ select
 from customer
 where concat(first_name, ' ', last_name) = 'jammie swindles';
 
+-- perform update
 update customer set
 	phone = '1-801-EAT-CAKE'
 where customer_id = 48;
@@ -388,7 +389,8 @@ group by
     c.first_name,
     c.last_name
 having count(s.show_id) = 1;
-    
+
+-- perform delete
 delete t from ticket t
 inner join customer c on t.customer_id = c.customer_id
 inner join `show` s on t.show_id = t.show_id
@@ -403,6 +405,7 @@ select *
 from customer
 where first_name = 'liv';
 
+-- perform deletes
 delete t from ticket t
 where customer_id = 65;
 
