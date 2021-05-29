@@ -146,4 +146,54 @@ group by
 order by count(t.ticket_id) desc
 limit 1;
 
+/* ------------
+
+		Queries for testing stretch goals
+        
+*/ ------------
+
+-- payment methods
+
+select * from payment_type;
+
+-- how many people paid using each payment type
+
+select 
+	count(t.payment_type_id) times_used,
+    p.method payment_method
+from ticket t
+inner join payment_type p on t.payment_type_id = p.payment_type_id
+group by p.method;
+
+-- list all customers that havent paid
+
+select
+	c.first_name,
+    c.last_name,
+    t.paid
+from customer c
+inner join ticket t on c.customer_id = t.customer_id
+where t.paid is false;
+
+-- login
+
+select * from login;
+
+-- list all customers without a login
+
+select
+	c.first_name,
+    c.last_name,
+	l.username
+from customer c
+left outer join login l on c.customer_id = l.customer_id
+where l.username is null;
+
+-- promotion
+
+select * from promotion;
+
+-- list all shows with a promotion
+
+
 
