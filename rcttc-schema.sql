@@ -56,7 +56,7 @@ create table ticket (
     customer_id int not null,
     seat varchar(2) not null,
     paid bool default 0 not null,
-    payment_type_id int not null,
+    payment_type_id int null,
     constraint fk_ticket_show_id
 		foreign key (show_id)
         references `show`(show_id),
