@@ -145,31 +145,31 @@ VALUES
 	(2,'Little Fitz','10 E Exchange St, St Paul, MN 55101','(651) 555-5555','little.fitz@rcttc.com'),
 	(3,'Horizon','70 Meadow Valley Parkway, Saint Paul, MN 55103','(651) 555-5555','horizon@rcttc.com');
 
--- insert values for show
-
-INSERT INTO `show` (`show_id`, `title`, `price`, `date`, `theater_id`) 
-VALUES 
-	(1,'Send in the Clowns',15.00,'2021-03-01',1),
-	(2,'Send in the Clowns',15.00,'2021-09-24',1),
-	(3,'The Dress',14.85,'2021-01-04',1),
-	(4,'Tell Me What To Think',16.25,'2021-12-21',1),
-	(5,'The Sky Lit Up',20.00,'2021-03-01',2),
-	(6,'The Sky Lit Up',20.00,'2021-09-24',2),
-	(7,'Dance Dance Vertical',18.95,'2021-01-04',2),
-	(8,'Stop. Just Stop.',17.35,'2021-12-21',2),
-	(9,'Burr',21.50,'2021-03-01',3),
-	(10,'Burr',21.50,'2021-09-24',3),
-	(11,'Caddyshack',15.25,'2021-01-04',3),
-	(12,'Hair',14.75,'2021-12-21',3);
-    
 -- insert values for promotion
 
-INSERT INTO `promotion` (`promotion_id`, `description`, `discount_percent`, `show_id`)
+INSERT INTO `promotion` (`promotion_id`, `description`, `discount_percent`)
 VALUES 
-	(1,"10% off",0.1,11),
-	(2,"25% off",0.25,12),
-	(3,"50% off",0.5,5),
-    (4,"25% off",0.25,9);
+	(1,"10% off",0.1),
+	(2,"25% off",0.25),
+	(3,"50% off",0.5);
+
+-- insert values for show
+
+INSERT INTO `show` (`show_id`, `title`, `price`, `date`, `theater_id`, `promotion_id`) 
+VALUES 
+	(1,'Send in the Clowns',15.00,'2021-03-01',1,null),
+	(2,'Send in the Clowns',15.00,'2021-09-24',1,null),
+	(3,'The Dress',14.85,'2021-01-04',1,1),
+	(4,'Tell Me What To Think',16.25,'2021-12-21',1,3),
+	(5,'The Sky Lit Up',20.00,'2021-03-01',2,null),
+	(6,'The Sky Lit Up',20.00,'2021-09-24',2,null),
+	(7,'Dance Dance Vertical',18.95,'2021-01-04',2,2),
+	(8,'Stop. Just Stop.',17.35,'2021-12-21',2,null),
+	(9,'Burr',21.50,'2021-03-01',3,1),
+	(10,'Burr',21.50,'2021-09-24',3,null),
+	(11,'Caddyshack',15.25,'2021-01-04',3,1),
+	(12,'Hair',14.75,'2021-12-21',3,2);
+    
     
 INSERT INTO `cast_crew` (`cast_crew_id`, `first_name`, `last_name`, `role`)
 VALUES
@@ -660,3 +660,6 @@ where l.username is null;
 -- promotion
 
 select * from promotion;
+
+-- list all shows with a promotion
+
