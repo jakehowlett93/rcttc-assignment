@@ -193,7 +193,33 @@ where l.username is null;
 
 select * from promotion;
 
--- list all shows with a promotion
+-- list all shows with a promotion include their new price
 
+select
+	s.title,
+    p.`description` promotion,
+    s.price original_price,
+    round(s.price - (s.price * p.discount_percent), 2) promotion_price
+from `show` s
+inner join promotion p on s.promotion_id = p.promotion_id;
+
+-- crew
+
+select * from cast_crew;
+
+-- list the cast and crew for the caddyshack showing on 2021-01-04
+
+select 
+	cc.first_name,
+    cc.last_name,
+    cc.`role`,
+    s.title,
+    s.`date`
+from cast_crew cc
+inner join show_cast_crew scc on cc.cast_crew_id = scc.cast_crew_id
+inner join `show` s on scc.show_id = s.show_id
+where s.title = 'caddyshack'
+	and s.`date` = '2021-01-04';
+	
 
 
