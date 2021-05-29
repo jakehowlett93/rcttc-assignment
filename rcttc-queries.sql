@@ -146,4 +146,80 @@ group by
 order by count(t.ticket_id) desc
 limit 1;
 
+/* ------------
+
+		Queries for testing stretch goals
+        
+*/ ------------
+
+-- payment methods
+
+select * from payment_type;
+
+-- how many people paid using each payment type
+
+select 
+	count(t.payment_type_id) times_used,
+    p.method payment_method
+from ticket t
+inner join payment_type p on t.payment_type_id = p.payment_type_id
+group by p.method;
+
+-- list all customers that havent paid
+
+select
+	c.first_name,
+    c.last_name,
+    t.paid
+from customer c
+inner join ticket t on c.customer_id = t.customer_id
+where t.paid is false;
+
+-- login
+
+select * from login;
+
+-- list all customers without a login
+
+select
+	c.first_name,
+    c.last_name,
+	l.username
+from customer c
+left outer join login l on c.customer_id = l.customer_id
+where l.username is null;
+
+-- promotion
+
+select * from promotion;
+
+-- list all shows with a promotion include their new price
+
+select
+	s.title,
+    p.`description` promotion,
+    s.price original_price,
+    round(s.price - (s.price * p.discount_percent), 2) promotion_price
+from `show` s
+inner join promotion p on s.promotion_id = p.promotion_id;
+
+-- crew
+
+select * from cast_crew;
+
+-- list the cast and crew for the caddyshack showing on 2021-01-04
+
+select 
+	cc.first_name,
+    cc.last_name,
+    cc.`role`,
+    s.title,
+    s.`date`
+from cast_crew cc
+inner join show_cast_crew scc on cc.cast_crew_id = scc.cast_crew_id
+inner join `show` s on scc.show_id = s.show_id
+where s.title = 'caddyshack'
+	and s.`date` = '2021-01-04';
+	
+
 
