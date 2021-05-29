@@ -34,15 +34,25 @@ create table theater (
     email varchar(225) not null
 );
 
+create table promotion (
+	promotion_id int primary key auto_increment,
+    `description` varchar(255) not null,
+    discount_percent decimal(3,2) not null
+);
+
 create table `show` (
 	show_id int primary key auto_increment,
     title varchar(255) not null,
     price decimal(4,2) not null,
     `date` date not null,
     theater_id int not null,
+    promotion_id int null,
 	constraint fk_show_theater_id
 		foreign key (theater_id)
-        references theater(theater_id)
+        references theater(theater_id),
+	constraint fk_show_promotion_id
+		foreign key (promotion_id)
+        references promotion(promotion_id)
 );
 
 create table payment_type (
@@ -66,16 +76,6 @@ create table ticket (
 	constraint fk_ticket_payment_type_id
 		foreign key (payment_type_id)
 		references payment_type(payment_type_id)
-);
-
-create table promotion (
-	promotion_id int primary key auto_increment,
-    `description` varchar(255) not null,
-    discount_percent decimal(3,2) not null,
-    show_id int not null,
-    constraint fk_promotion_show_id
-		foreign key (show_id)
-        references `show`(show_id)
 );
 
 create table cast_crew (
